@@ -1,0 +1,56 @@
+.
+├── api
+├── cmd
+│   └── web
+│       ├── handlers.go
+│       ├── helpers.go
+│       ├── main.go
+│       ├── middleware.go
+│       ├── routes.go
+│       ├── templates.go
+│       └── templates_test.go
+├── config
+├── doc
+├── forms
+│   ├── errors.go
+│   └── form.go
+├── go.mod
+├── go.sum
+├── LICENSE
+├── models
+│   ├── firebase
+│   ├── models.go
+│   ├── mongodb
+│   ├── mysql
+│   │   ├── migration
+│   │   │   └── init-mysql.sql
+│   │   ├── snippets.go
+│   │   └── users.go
+│   ├── postgresql
+│   └── sqlite
+├── pkg
+├── README.md
+├── snippetbox
+├── tls
+│   ├── cert.pem
+│   └── key.pem
+├── tree.txt
+└── ui
+    ├── html
+    │   ├── base.layout.tmpl
+    │   ├── create.page.tmpl
+    │   ├── footer.partial.tmpl
+    │   ├── home.page.tmpl
+    │   ├── login.page.tmpl
+    │   ├── show.page.tmpl
+    │   └── signup.page.tmpl
+    └── static
+        ├── css
+        │   └── main.css
+        ├── img
+        │   ├── favicon.ico
+        │   └── logo.png
+        └── js
+            └── main.js
+
+21 directories, 32 files
