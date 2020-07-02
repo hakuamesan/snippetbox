@@ -4,15 +4,17 @@ import (
 	"crypto/tls"
 	"database/sql"
 	"flag"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
-	"snippetbox/pkg/models/mysql"
+	"snippetbox/pkg/models/postgresql"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golangcollege/sessions"
+	_ "github.com/lib/pq"
 )
 
 type contextKey string
@@ -23,8 +25,8 @@ type application struct {
 	errorLog      *log.Logger
 	infoLog       *log.Logger
 	session       *sessions.Session
-	snippets      *mysql.SnippetModel
-	users         *mysql.UserModel
+	snippets      *pq.SnippetModel //*mysql.SnippetModel
+	users         *pq.UserModel    // mysql.UserModel
 	templateCache map[string]*template.Template
 }
 
@@ -32,7 +34,16 @@ func main() {
 
 	addr := flag.String("addr", ":4000", "HTTP network address")
 	//dsn := flag.String("dsn", "web:pass@tcp(127.0.0.1:3306)/snippetbox?parseTime=true", "MySQL data source name")
-	dsn := flag.String("dsn", "goadmin:goadmin@tcp(127.0.0.1:3306)/snippetbox?parseTime=true", "MySQL data source name")
+	//dsnMysql := flag.String("dsn", "goadmin:goadmin@tcp(127.0.0.1:3306)/snippetbox?parseTime=true", "MySQL data source name")
+	//dsnPostgresql := flag.String("dsn", "postgres:postgres@tcp(127.0.0.1:5342)", "PostgresQL dsn")
+	host := "127.0.0.1"
+	port := 5432
+	user := "postgres"
+	password := "postgres"
+	dbname := "postgres"
+
+	dnsPostgresql := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
 	secret := flag.String("secret", "s6Ndh+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Secret key")
 
 	flag.Parse()
@@ -40,7 +51,7 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime)
 
-	db, err := openDB(*dsn)
+	db, err := openDB(*dsnPostgresql)
 	if err != nil {
 		errorLog.Fatal(err)
 	}
@@ -61,8 +72,8 @@ func main() {
 		errorLog:      errorLog,
 		infoLog:       infoLog,
 		session:       session,
-		snippets:      &mysql.SnippetModel{DB: db},
-		users:         &mysql.UserModel{DB: db},
+		snippets:      &pq.SnippetModel{DB: db},
+		users:         &pq.UserModel{DB: db},
 		templateCache: templateCache,
 	}
 
@@ -88,7 +99,8 @@ func main() {
 }
 
 func openDB(dsn string) (*sql.DB, error) {
-	db, err := sql.Open("mysql", dsn)
+	//	db, err := sql.Open("mysql", dsn)
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		return nil, err
 	}

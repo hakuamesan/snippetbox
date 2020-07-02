@@ -8,5 +8,6 @@ require (
 	github.com/golangcollege/sessions v1.1.0
 	github.com/justinas/alice v0.0.0-20171023064455-03f45bd4b7da
 	github.com/justinas/nosurf v1.1.0
+	github.com/lib/pq v1.7.0
 	golang.org/x/crypto v0.0.0-20181009213950-7c1a557ab941
 )
