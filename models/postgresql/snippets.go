@@ -12,7 +12,7 @@ type SnippetModel struct {
 func (m *SnippetModel) Insert(title, content, expires string) (int, error) {
 
 	stmt := `INSERT INTO snippets (title, content, created, expires)	
-	VALUES(?, ?, UTC_TIMESTAMP(), DATE_ADD(UTC_TIMESTAMP(), INTERVAL ? DAY))`
+	VALUES($1, $2, UTC_TIMESTAMP(), DATE_ADD(UTC_TIMESTAMP(), INTERVAL $3 DAY))`
 
 	result, err := m.DB.Exec(stmt, title, content, expires)
 	if err != nil {
@@ -32,7 +32,7 @@ func (m *SnippetModel) Get(id int) (*models.Snippet, error) {
 	s := &models.Snippet{}
 
 	stmt := `SELECT id, title, content, created, expires FROM snippets
-	WHERE expires > UTC_TIMESTAMP() and id = ?`
+	WHERE expires > UTC_TIMESTAMP() and id = $1`
 
 	err := m.DB.QueryRow(stmt, id).Scan(
 		&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires,
