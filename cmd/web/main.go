@@ -9,12 +9,12 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"snippetbox/pkg/models/postgresql"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golangcollege/sessions"
 	_ "github.com/lib/pq"
+	"snippetbox/pkg/models/postgresql"
 )
 
 type contextKey string
