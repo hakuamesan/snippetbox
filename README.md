@@ -17,18 +17,6 @@ A Makefile is provided for your convenience to build the Go binary 'snippetbox'.
 The install script is in models/mysql/migration/init-mysql.sql
 This will create the necessary databases, users, tables and some dummy data.
 
-## PostgresQL
-The install script is in models/mysql/migration/init-postgresql.sql
-This will create the necessary databases, users, tables and some dummy data.
-
-## SQLite
-The install script is in models/mysql/migration/init-mongodb.sql
-This will create the necessary databases, users, tables and some dummy data.
-
-## Mongodb
-The install script is in models/mysql/migration/init-sqlite.sql
-This will create the necessary databases, users, tables and some dummy data.
-
 
 # Author
 Hakuame
