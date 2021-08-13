@@ -9,12 +9,12 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"snippetbox/models/mysql"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golangcollege/sessions"
 	_ "github.com/lib/pq"
-	"snippetbox/pkg/models/postgresql"
 )
 
 type contextKey string
@@ -25,8 +25,8 @@ type application struct {
 	errorLog      *log.Logger
 	infoLog       *log.Logger
 	session       *sessions.Session
-	snippets      *pq.SnippetModel //*mysql.SnippetModel
-	users         *pq.UserModel    // mysql.UserModel
+	snippets      *mysql.SnippetModel
+	users         mysql.UserModel
 	templateCache map[string]*template.Template
 }
 
